@@ -1,0 +1,16 @@
+[gd_resource type="AudioEffectSNESEcho" format=3 uid="uid://cosobhni8xw11"]
+
+[resource]
+echo_delay = 4
+echo_feedback = 108
+echo_volume_left = 15
+echo_volume_right = 15
+fir_0 = -1
+fir_1 = 8
+fir_2 = 23
+fir_3 = 36
+fir_4 = 36
+fir_5 = 23
+fir_6 = 8
+fir_7 = -1
+resource_name = "SNES-DelayModule"

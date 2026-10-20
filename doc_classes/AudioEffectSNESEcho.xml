@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AudioEffectSNESEcho" inherits="AudioEffect" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		The SNES S-DSP echo: a delay ring, an 8-tap FIR filter and feedback, bit-exact at 32 kHz.
+	</brief_description>
+	<description>
+		Emulates the echo unit of the SNES sound chip. The echo path is resampled to 32 kHz, run with the hardware's 16-bit integer arithmetic (wrapping multiplies, saturating additions, 15-bit samples), and resampled back. The dry path stays at the mix rate. Properties take the hardware register values, so presets from SNES games copy over directly.
+		The whole output, dry and wet, is delayed by about 2.5 ms so the two stay aligned, and the final mix saturates at full scale as the hardware does.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_fir_coefficient" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="tap" type="int" />
+			<description>
+				Returns FIR coefficient [param tap] (0-7).
+			</description>
+		</method>
+		<method name="set_fir_coefficient">
+			<return type="void" />
+			<param index="0" name="tap" type="int" />
+			<param index="1" name="coefficient" type="int" />
+			<description>
+				Sets FIR coefficient [param tap] (0-7), clamped to -128..127.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="dry_volume_left" type="int" setter="set_dry_volume_left" getter="get_dry_volume_left" default="127">
+			Left dry volume (MVOLL), -128..127. 127 is unity; negative inverts phase.
+		</member>
+		<member name="dry_volume_right" type="int" setter="set_dry_volume_right" getter="get_dry_volume_right" default="127">
+			Right dry volume (MVOLR), -128..127.
+		</member>
+		<member name="echo_delay" type="int" setter="set_echo_delay" getter="get_echo_delay" default="5">
+			Echo length (EDL) in 16 ms blocks, 0..15. 0 is a one-sample ring. As on hardware, a change takes effect only when the ring next wraps.
+		</member>
+		<member name="echo_feedback" type="int" setter="set_echo_feedback" getter="get_echo_feedback" default="70">
+			Echo feedback (EFB), -128..127: how much of the FIR output is written back into the ring.
+		</member>
+		<member name="echo_volume_left" type="int" setter="set_echo_volume_left" getter="get_echo_volume_left" default="40">
+			Left echo volume (EVOLL), -128..127.
+		</member>
+		<member name="echo_volume_right" type="int" setter="set_echo_volume_right" getter="get_echo_volume_right" default="40">
+			Right echo volume (EVOLR), -128..127.
+		</member>
+		<member name="echo_write_enabled" type="bool" setter="set_echo_write_enabled" getter="is_echo_write_enabled" default="true">
+			Whether new audio is written into the ring (FLG bit 5 clear). Disabling it freezes the ring's contents, which keep repeating.
+		</member>
+		<member name="fir_0" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="127">
+			FIR0, the coefficient on the oldest of the 8 samples, -128..127. 127 on one tap with the rest 0 passes the echo through at about unity gain.
+		</member>
+		<member name="fir_1" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR1, -128..127.
+		</member>
+		<member name="fir_2" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR2, -128..127.
+		</member>
+		<member name="fir_3" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR3, -128..127.
+		</member>
+		<member name="fir_4" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR4, -128..127.
+		</member>
+		<member name="fir_5" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR5, -128..127.
+		</member>
+		<member name="fir_6" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR6, -128..127.
+		</member>
+		<member name="fir_7" type="int" setter="set_fir_coefficient" getter="get_fir_coefficient" default="0">
+			FIR7, the coefficient on the newest sample, -128..127.
+		</member>
+	</members>
+</class>

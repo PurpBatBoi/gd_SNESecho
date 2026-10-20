@@ -60,5 +60,3 @@ ios.release = {
   "./bin/ios/libgd_snesdelay.ios.template_release.single.xcframework": ""
 }
 
-[icons]
-ItemData = "./icons/ItemData.svg"

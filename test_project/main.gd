@@ -1,52 +1,38 @@
 extends Node2D
 
-func _ready() -> void:
-	test_plugin_functionality()
+# Puts AudioEffectSNESEcho on the Master bus and plays a short pluck every
+# 1.5 seconds so the echo can be heard. Tweak the effect in the Audio panel
+# (bottom dock) while the scene runs.
 
-func test_plugin_functionality()->void:
-	var my_res:ItemData = ItemData.new()
-	
-	print(my_res.name)
-	my_res.name = "Sword"
-	print(my_res.name)
-	
-	print(my_res.price)
-	
-	var nums:Array[int] = my_res.create_10k_numbers(5, 10)
-	print(nums)
-	
-	print("Spawning stuff..")
-	my_res.spawn_stuff()
-	
-	print("Spawning custom scene..")
-	var custom_scn:PackedScene = preload("res://main.tscn")
-	my_res.spawn_custom_scene(custom_scn)
-	
-	var nodes:Array[Node] = [Node.new(), Node.new()]
-	
-	nodes[0].name = "TestNodeName1"
-	nodes[1].name = "TestNodeName2"
-	
-	print("Print node name")
-	my_res.print_node_name(nodes[0])
-	
-	print("Print resource name")
-	
-	var res:Resource = Resource.new()
-	res.resource_name = "TestResource"
-	
-	my_res.print_resource_name(res)
-	
-	print("Print ALL node names")
-	my_res.print_all_node_names(nodes)
-	
-	my_res.modify_all_node_names_wrong_way(nodes, "RenamedNode")
-	
-	print("Print ALL node names after modification")
-	my_res.print_all_node_names(nodes)
-	
-	
-	
-	
-	
-	
+const MIX_RATE := 32000
+
+func _ready() -> void:
+	var echo := AudioEffectSNESEcho.new()
+	echo.echo_delay = 5
+	echo.echo_feedback = 70
+	AudioServer.add_bus_effect(0, echo)
+
+	var player := AudioStreamPlayer.new()
+	player.stream = make_pluck()
+	add_child(player)
+
+	var timer := Timer.new()
+	timer.wait_time = 1.5
+	timer.autostart = true
+	timer.timeout.connect(player.play)
+	add_child(timer)
+	player.play()
+
+func make_pluck() -> AudioStreamWAV:
+	var frames := MIX_RATE / 8
+	var data := PackedByteArray()
+	data.resize(frames * 2)
+	for i in frames:
+		var t := float(i) / MIX_RATE
+		var s := sin(TAU * 440.0 * t) * exp(-t * 30.0) * 0.6
+		data.encode_s16(i * 2, int(s * 32767.0))
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = MIX_RATE
+	wav.data = data
+	return wav

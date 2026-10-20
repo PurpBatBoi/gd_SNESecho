@@ -1,3 +1,6 @@
+# Github workflow logs
+.workflow_logs/
+
 # Godot auto generated files
 *.gen.*
 .godot/

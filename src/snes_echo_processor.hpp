@@ -3,6 +3,7 @@
 #include "resampler.hpp"
 #include "snes_echo_core.hpp"
 
+#include <cstddef>
 #include <vector>
 
 // Runs the S-DSP echo on audio at the host mix rate. The echo send is resampled

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://hn8dh5y3yq6a"]
 
-[ext_resource type="AudioStream" uid="uid://d3wsnb2jwbc12" path="res://coin.wav" id="1_ig7tw"]
+[ext_resource type="AudioStream" uid="uid://bs4xpncrkacuo" path="res://pluck.wav" id="1_ig7tw"]
 
 [node name="Main" type="Node2D" unique_id=2124938054]
 

@@ -3,8 +3,8 @@
 [resource]
 echo_delay = 4
 echo_feedback = 108
-echo_volume_left = 15
-echo_volume_right = 15
+echo_volume_left = 21
+echo_volume_right = 21
 fir_0 = -1
 fir_1 = 8
 fir_2 = 23

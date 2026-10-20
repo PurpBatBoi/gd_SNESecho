@@ -1,0 +1,13 @@
+{
+    "_": "Default custom build profile with minimal base classes. Edit this file to manually specify 'enabled_classes' or 'disabled_classes'.",
+    "type": "feature_profile",
+    "enabled_classes": [
+        "Object",
+        "RefCounted",
+        "OS",
+        "AudioEffect",
+        "AudioEffectInstance",
+        "AudioFrame",
+        "AudioServer"
+    ]
+}

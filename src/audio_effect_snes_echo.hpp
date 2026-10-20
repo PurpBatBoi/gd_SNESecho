@@ -4,6 +4,7 @@
 
 #include <godot_cpp/classes/audio_effect.hpp>
 #include <godot_cpp/classes/audio_effect_instance.hpp>
+#include <godot_cpp/classes/audio_frame.hpp>
 
 using namespace godot;
 
